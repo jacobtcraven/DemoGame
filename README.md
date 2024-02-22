@@ -1,1 +1,5 @@
-# DemoGame
+The meaningful feature we added is limited shots for shooting at the tower. On each level, the player gets 4 shots to have a projectile touch the green goal area. On their fourth shot a button appears asking them if they would like to give up. This is because we wanted to allow the player to let objects keep moving beyond the fourth launch of the projectile. We found that sometimes the projectile just needs time to hit the green zone and we did not want to elimnate this factor of the game. Once the fourth projectile is launched, no other projectiles can be launched. A "Shots left: " text is updated on the game screen to let the user know how many shots they have remaining. If the player decides to give up and hit the "give up" option, they will be presented with the "Game Over" screen. From there they have the option to play again. Another interesting feature we added is an immovable wall on level 4. This adds an interesting characteristic as the player has to use a strategic arc shot to hit the castle and reach the goal.
+
+Project Created by:
+Jacob Craven - 800719263
+Zayne
