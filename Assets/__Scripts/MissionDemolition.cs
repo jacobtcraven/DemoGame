@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Security;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,10 @@ public class MissionDemolition : MonoBehaviour
     public Text uitButton;
     public Vector3 castlePos; // Where to put castles
     public GameObject[] castles; // An array of the castles
+    public GameObject GOUI;
+    public GameObject GiveUpUI;
+    public GameObject UIButton;
+    public Text SLText;
 
     [Header("Set Dynamically")]
     public int level;
@@ -27,6 +32,7 @@ public class MissionDemolition : MonoBehaviour
     public GameObject castle; // The current castle
     public GameMode mode = GameMode.idle;
     public string showing = "Show Slingshot"; // Follow cam mode
+    static public int shotsLeft; // Shots the player has left
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +59,10 @@ public class MissionDemolition : MonoBehaviour
         castle = Instantiate<GameObject>(castles[level]);
         castle.transform.position = castlePos;
         shotsTaken = 0;
+        shotsLeft = 4;
+        // GameObject Slingshot = GameObject.FindGameObjectWithTag("Slingshot");
+        // string SlingText = Slingshot.GetComponent<Slingshot>().ShotsLeftText.text;
+        SLText.text = "Shots Left: " + shotsLeft;
 
         // Reset the camera
         SwitchView("Show Both");
@@ -119,8 +129,28 @@ public class MissionDemolition : MonoBehaviour
         }
     }
 
+    public void GameOver(){
+        GiveUpUI.SetActive(false);
+        GOUI.SetActive(true);
+        GameObject castle = GameObject.FindGameObjectWithTag("Castle");
+        castle.SetActive(false);
+        GameObject Slingshot = GameObject.FindGameObjectWithTag("Slingshot"); // Add reference to the Slingshot object
+        Slingshot.SetActive(true); // Call SetActive method on the Slingshot object
+        UIButton.SetActive(false); // Call SetActive method on the Slingshot object
+
+    }
+
     // Static method that allows code anywhere to increment shotsTaken
     public static void ShotFired(){
         S.shotsTaken++;
     }
+
+    public void Restart(){
+        GOUI.SetActive(false);
+        GameObject Slingshot = GameObject.FindGameObjectWithTag("Slingshot"); // Add reference to the Slingshot object
+        Slingshot.SetActive(true); // Call SetActive method on the Slingshot object
+        UIButton.SetActive(true); // Call SetActive method on the Slingshot object
+        Invoke("Start", 0.5f);
+    }
+
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Slingshot : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class Slingshot : MonoBehaviour
     public GameObject projectile;
     public bool aimingMode;
     private Rigidbody projectileRigidbody;
-
+    public Text ShotsLeftText;
+    public GameObject GiveUpUI;
     static public Vector3 LAUNCH_POS{
         get{
             if (S == null) return Vector3.zero;
@@ -79,9 +81,26 @@ public class Slingshot : MonoBehaviour
             projectileRigidbody.isKinematic = false;
             projectileRigidbody.velocity = -mouseDelta * velocityMult;
             FollowCam.POI = projectile;
-            projectile = null;
             MissionDemolition.ShotFired();
             ProjectileLine.S.poi = projectile;
+            projectile = null;
+            MissionDemolition.shotsLeft--;
+            ShotsLeftText.text = "Shots Left: " + MissionDemolition.shotsLeft;
+            if (MissionDemolition.shotsLeft == 0){
+                // VerifyOver(5);
+                // MissionDemolition.GameOver();
+                GiveUpUI.SetActive(true);
+            }
+
         }
     }
+
+    // IEnumerator VerifyOver(float waitTime)
+    // {
+    //     yield return new WaitForSecondsRealtime(waitTime);
+    //    if (MissionDemolition.shotsLeft <= 0){
+            
+    //         MissionDemolition.GameOver();
+    //    }
+    // }
 }
